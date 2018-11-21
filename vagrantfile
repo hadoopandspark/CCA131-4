@@ -1,0 +1,39 @@
+# Based on:
+#   https://www.cloudera.com/documentation/enterprise/5-15-x/topics/cm_ig_host_allocations.html#concept_f43_j4y_dw__section_icy_mgj_ndb
+Vagrant.configure("2") do |config|
+    # config.vm.define "masternode" do |masternode|    
+    #     masternode.vm.box      = "bento/centos-7.5"
+    #     masternode.vm.hostname = "masternode"
+    #     masternode.vm.provider "virtualbox" do |vb|
+    #         vb.name         = "masternode"
+    #         vb.gui          = false
+    #         vb.memory       = 4096
+    #         vb.cpus         = 4
+    #     end   
+    # end
+
+    # config.vm.define "utilitynode" do |utilitynode|    
+    #     utilitynode.vm.box      = "bento/centos-7.5"
+    #     utilitynode.vm.hostname = "utilitynode"
+    #     utilitynode.vm.provider "virtualbox" do |vb|
+    #         vb.name         = "utilitynode"
+    #         vb.gui          = false
+    #         vb.memory       = 4096
+    #         vb.cpus         = 4
+    #     end   
+    # end
+
+    (1..3).each do |i|
+        config.vm.define "workernode-#{i}" do |workernode|    
+            workernode.vm.box      = "bento/centos-7.5"
+            workernode.vm.hostname = "workernode-#{i}"
+            workernode.vm.provider "virtualbox" do |vb|
+                vb.linked_clone = true
+                vb.name         = "workernode-#{i}"
+                vb.gui          = false
+                vb.memory       = 4096
+                vb.cpus         = 4
+            end   
+        end
+    end
+end
